@@ -49,14 +49,16 @@ class MainController < ApplicationController
     end
   end
 
-  def phistory
+  def history
     must_be_logged_in
-    permission_in(permission_admin?, permission_buyer?)
-  end
-
-  def shistory
-    must_be_logged_in
-    
+    u = User.where(id: session[:id]).first
+    if u and ((u.user_type == 0) or (u.user_type == 2))
+      @history = Inventory.where(user_id: session[:id]).order(:created_at)
+      render "purchase"
+    elsif u and (u.user_type == 1)
+      @history = Inventory.where(seller_id: session[:id]).order(:created_at)
+      render "sale"
+    end
   end
 
   def inventory

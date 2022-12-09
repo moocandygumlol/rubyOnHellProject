@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   get 'main' ,to: 'main#home'
   get 'profile' ,to: 'main#profile'
   get 'my_market' ,to: 'main#market'
-  get 'purchase_history' ,to: 'main#phistory'
-  get 'sale_history' ,to: 'main#shistory'
+  get 'purchase_history' ,to: 'main#history'
+  get 'sale_history' ,to: 'main#history'
   get 'my_inventory' ,to: 'main#inventory'
   get 'top_seller' ,to: 'main#topseller'
   resources :markets

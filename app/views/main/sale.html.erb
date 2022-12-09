@@ -1,0 +1,33 @@
+<h1>Sale history</h1>
+<%= link_to "back to main" , main_path%>
+<table class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Buyer</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @history.each do |his| %>
+        <% item_name = Item.where(id: his.item_id).first.name%>
+        <% buyer_name = User.where(id: his.user_id).first.name%>
+        <tr>
+            <td><%=item_name%></td>
+            <td><%=buyer_name%></td>
+            <td><%=his.price%></td>
+            <td><%=his.quantity%></td>
+            <td><%=his.created_at%></td>
+        </tr>
+        <%end%>
+    </tbody>
+</table>
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
+
