@@ -1,0 +1,30 @@
+<h1>My inventory</h1>
+<%session[:back] = "my_inventory"%>
+<%= link_to "back to main" , main_path%>
+<table class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>save</th>
+            <th>delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @inven.each do |i| %>
+        <% item_name = Item.where(id: i.item_id).first.name%>
+        <% url = "/updateinventory"%>
+        <%= form_with url: url, method: :post , data: {turbo: false} do |f| %>
+        <%=f.hidden_field :market_id, value: i.id%>
+        <tr>
+            <td><%=item_name%></td>
+            <td><%=f.text_field :price, value: i.price%></td>
+            <td><%=f.text_field :quantity, value: i.quantity%></td>
+            <td><%=f.submit :save %></td>
+            <%end%>
+            <td> <%= button_to "Delete", i, method: :delete %></td>
+        </tr>
+        <%end%>
+    </tbody>
+</table>
