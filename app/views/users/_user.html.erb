@@ -1,0 +1,23 @@
+<div id="<%= dom_id user %>">
+  <p>
+    <strong>Email:</strong>
+    <%= user.email %>
+  </p>
+
+  <p>
+    <strong>Name:</strong>
+    <%= user.name %>
+  </p>
+
+  <p>
+    <strong>User type:</strong>
+    <% role = "admin"%>
+    <% if user.user_type == 1%>
+    <% role = "seller"%>
+    <% elsif user.user_type == 2%>
+    <% role = "buyer"%>
+    <%end%>
+    <%= role %>
+  </p>
+
+</div>

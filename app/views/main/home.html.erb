@@ -1,0 +1,33 @@
+<h1>Home</h1>
+<p>Welcome to RubyOnHell Store : id <%=@id%></p>
+
+<%# everyone who already login can open this page %>
+<% if @role == 'admin' or @role == 'seller' or @role == 'buyer'%>
+    <%= link_to "Profile" , profile_path %>
+    <%= link_to "Logout" , main_destroy_path%>
+<%end%>
+
+<%# seller and admin can open this page %>
+<% if @role == 'admin' or @role == 'seller'%>
+    <%= link_to "Sale History" , sale_history_path %>
+    <%= link_to "My Inventory" , my_inventory_path %>
+    <%= link_to "Top Seller" , my_inventory_path %>
+<%end%>
+
+<%# buyer and admin can open this page %>
+<% if @role == 'admin' or @role == 'buyer'%>
+    <%= link_to "My Market" , my_market_path %>
+    <%= link_to "Purchase History" , purchase_history_path %>
+<%end%>
+
+<% if @role == 'guest'%>
+    <%= link_to "My Market" , my_market_path %>
+    <%= link_to "LogIn" , login_path %>
+<%end%>
+
+
+
+
+
+
+
