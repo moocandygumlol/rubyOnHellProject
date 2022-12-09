@@ -42,6 +42,11 @@ class MainController < ApplicationController
   end
 
   def market
+    if session[:logged_in]
+      @role = role?
+    else
+      @role = 'guest'
+    end
   end
 
   def phistory
