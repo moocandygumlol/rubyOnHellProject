@@ -50,12 +50,31 @@ class MarketsController < ApplicationController
   # DELETE /markets/1 or /markets/1.json
   def destroy
     @market.destroy
-
-    respond_to do |format|
-      format.html { redirect_to markets_url, notice: "Market was successfully destroyed." }
-      format.json { head :no_content }
+    if session[:back] == "my_inventory"
+      redirect_to my_inventory_path, notice: "Inventory already deleted"
+      session[:back] = "nothing"
+    else
+      respond_to do |format|
+        format.html { redirect_to markets_url, notice: "Market was successfully destroyed." }
+        format.json { head :no_content }
+      end
     end
   end
+
+  def updateInventory
+    u = Market.where(id: params[:market_id]).first
+    u.quantity = params[:quantity]
+    u.price = params[:price]
+    u.save
+    redirect_to my_inventory_path, notice: "Your change already saved."
+  end
+
+  # def deleteMarket
+  #   u = Market.where(id: params[:market_id]).first
+  #   item_name = Item.where(id: u.item_id).first.name
+  #   Market.delete(id: params[:market_id])
+  #   redirect_to my_inventory_path, notice: item_name + "already deleted"
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -67,4 +86,5 @@ class MarketsController < ApplicationController
     def market_params
       params.require(:market).permit(:user_id, :item_id, :price, :quantity)
     end
+
 end
