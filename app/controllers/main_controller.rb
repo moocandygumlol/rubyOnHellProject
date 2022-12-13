@@ -64,7 +64,7 @@ class MainController < ApplicationController
   def inventory
     must_be_logged_in
     @inven = Market.where(user_id: session[:id])
-    @item = Item.where(enable: true)
+    @items = Item.where(enable: true)
     render "my_inventory"
   end
 

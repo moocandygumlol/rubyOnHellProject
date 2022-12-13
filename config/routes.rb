@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'changepassword', to: 'users#changePassword'
   post 'newpassword', to: 'users#newPassword'
   post 'updateinventory', to: 'markets#updateInventory'
+  post 'addmarket', to: 'markets#addMarket'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

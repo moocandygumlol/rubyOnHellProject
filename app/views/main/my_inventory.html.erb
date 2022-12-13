@@ -1,6 +1,5 @@
 <h1>My inventory</h1>
 <%session[:back] = "my_inventory"%>
-<%= link_to "back to main" , main_path%>
 <table class="display" style="width:100%">
     <thead>
         <tr>
@@ -26,5 +25,18 @@
             <td> <%= button_to "Delete", i, method: :delete %></td>
         </tr>
         <%end%>
+        
+        <% addurl = "/addmarket"%>
+        <%= form_with url: addurl, method: :post , data: {turbo: false} do |f| %>
+        <%=f.hidden_field :user_id, value: session[:id]%>
+        <tr>
+            <td><%= f.select :item_id, @items.map{|i| [i.name, i.id]}, value: "please select"%></td>
+            <td><%=f.text_field :price %></td>
+            <td><%=f.text_field :quantity%></td>
+            <td><%= f.submit :add %></td>   
+        <% end %>
+    </tr>
+        
     </tbody>
 </table>
+<%= link_to "back to main" , main_path%>

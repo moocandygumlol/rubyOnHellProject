@@ -51,8 +51,11 @@ class MarketsController < ApplicationController
   def destroy
     @market.destroy
     if session[:back] == "my_inventory"
-      redirect_to my_inventory_path, notice: "Inventory already deleted"
       session[:back] = "nothing"
+      respond_to do |format|
+        format.html { redirect_to my_inventory_path, notice: "Inventory was successfully destroyed.", :status => 307 }
+        format.json { head :no_content }
+      end
     else
       respond_to do |format|
         format.html { redirect_to markets_url, notice: "Market was successfully destroyed." }
@@ -69,12 +72,23 @@ class MarketsController < ApplicationController
     redirect_to my_inventory_path, notice: "Your change already saved."
   end
 
-  # def deleteMarket
-  #   u = Market.where(id: params[:market_id]).first
-  #   item_name = Item.where(id: u.item_id).first.name
-  #   Market.delete(id: params[:market_id])
-  #   redirect_to my_inventory_path, notice: item_name + "already deleted"
-  # end
+  def is_numberic?(str)
+    str == "#{str.to_f}" || str == "#{str.to_i}"
+  end
+
+  def addMarket
+    if(is_numberic?(params[:price]) == false or is_numberic?(params[:quantity]) == false)
+      redirect_to my_inventory_path, notice: "Your price and quantity need to be a real number."
+    else
+      m = Market.new
+      m.user_id = params[:user_id]
+      m.item_id = params[:item_id]
+      m.quantity = params[:quantity]
+      m.price = params[:price]
+      m.save
+      redirect_to my_inventory_path, notice: "Your new inventory already add."
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
