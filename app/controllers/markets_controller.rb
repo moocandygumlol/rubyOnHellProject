@@ -52,8 +52,10 @@ class MarketsController < ApplicationController
     @market.destroy
     if session[:back] == "my_inventory"
       session[:back] = "nothing"
-      redirect_to my_inventory_path, notice: "Inventory was successfully destroyed."
-      
+      respond_to do |format|
+        format.html { redirect_to my_inventory_path, notice: "Inventory was successfully destroyed.", :status => 307 }
+        format.json { head :no_content }
+      end
     else
       respond_to do |format|
         format.html { redirect_to markets_url, notice: "Market was successfully destroyed." }

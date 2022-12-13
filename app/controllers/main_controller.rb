@@ -65,11 +65,6 @@ class MainController < ApplicationController
     must_be_logged_in
     @inven = Market.where(user_id: session[:id])
     @items = Item.where(enable: true)
-    # n = items.length()
-    # @item_id = Array.new(n)
-    # for i  in 0..n do
-    #   @item_id[i] = [i,i+1]
-    # end
     render "my_inventory"
   end
 
