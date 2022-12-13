@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get 'sale_history' ,to: 'main#history'
   get 'my_inventory' ,to: 'main#inventory'
   get 'top_seller' ,to: 'main#topseller'
+  post 'create_tables' ,to: 'main#create_tables'
+  post 'buy' ,to: 'main#buy'
   resources :markets
   resources :inventories
   resources :items
