@@ -16,6 +16,8 @@
         <% url = "/updateinventory"%>
         <%= form_with url: url, method: :post , data: {turbo: false} do |f| %>
         <%=f.hidden_field :market_id, value: i.id%>
+        <%=f.hidden_field :price_check, value: i.price%>
+        <%=f.hidden_field :quantity_check, value: i.quantity%>
         <tr>
             <td><%=item_name%></td>
             <td><%=f.text_field :price, value: i.price%></td>

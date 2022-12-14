@@ -1,4 +1,5 @@
 <%= form_with(model: market) do |form| %>
+  <%= form.hidden_field :lock_version%>
   <% if market.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(market.errors.count, "error") %> prohibited this market from being saved:</h2>

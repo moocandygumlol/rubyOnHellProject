@@ -29,6 +29,8 @@
             </tr>
         </tbody>
     </table>
+    <%else%>
+        <p>No one is seller that has best price in your date range</p>
     <%end%>
     <%if $amount.first != nil%>
     <table>
@@ -48,5 +50,8 @@
             </tr>
         </tbody>
     </table>
+    <%else%>
+        <p>No one is seller that has best amount of quantity in your date range</p>
     <%end%>
+    <% session[:create] = false%>
 <%end%>

@@ -1,5 +1,10 @@
 <h1>My_Market</h1>
 <%= link_to "back to main" , main_path%>
+<%= form_with url: search_path, method: :post , data: {turbo: false} do |f| %>
+    <%=f.label :name , "Category Search"%>
+    <%=f.text_field :search%>
+    <%=f.submit :search %>
+<%end%>
 <table id="example" class="display" style="width:100%">
     <thead>
         <tr>
@@ -17,27 +22,33 @@
     
     
     <tbody>
+    <% if session[:search]%>
+        <% reg = Regexp.new(session[:regx])%>
+    <%end%>
     <% $u = Market.all%>
     <% for e in $u do%>
         <% x = User.where(id: e.user_id).first%>
         <% y = Item.where(id: e.item_id).first%>
-        <tr>
-            <td><%=y.name%></td>
-            <td><%=y.category%></td>
-            <td><%=x.name%></td>
-            <td><%=e.price%></td>
-            <td><%=e.quantity%></td>
-            <%if @role != 'guest'%>
-                <%= form_with url: buy_path, method: :post , data: {turbo: false} do |f| %>
-                    <%=f.hidden_field :f_id , value: e.id%>
-                    <td><%=f.number_field :amount , in: 1..1000000, step: 1%></td>
-                    <td><%=f.submit :Buy %></td>
-                <%end%>
-            <% end %>  
-        </tr>
+            <tr>
+                <td><%=y.name%></td>
+                <td><%=y.category%></td>
+                <td><%=x.name%></td>
+                <td><%=e.price%></td>
+                <td><%=e.quantity%></td>
+                <%if @role != 'guest'%>
+                    <%= form_with url: buy_path, method: :post , data: {turbo: false} do |f| %>
+                        <%=f.hidden_field :amount_check , value: e.quantity%>
+                        <%=f.hidden_field :f_id , value: e.id%>
+                        <td><%=f.number_field :amount , in: 1..1000000, step: 1%></td>
+                        <td><%=f.submit :Buy %></td>
+                    <%end%>
+                <% end %>  
+            </tr>
+        
     <%end%>
     </tbody>
 </table>
+<% session[:search] = false%>
 <script type="text/javascript" class="init">
     $(document).ready(function () {
         $('#example').DataTable();

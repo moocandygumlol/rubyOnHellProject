@@ -34,6 +34,7 @@ class MainController < ApplicationController
       @role = role?
       @id = session[:id]
       session[:create] = false
+      session[:search] = false
     else
       @role = 'guest'
     end
@@ -91,18 +92,29 @@ class MainController < ApplicationController
     @amount = params[:amount].to_i
     $m = Market.where(id: params[:f_id]).first
     $I = Inventory.new
-    if @amount > $m.quantity
-      redirect_to my_market_path , notice: "the quantity of this goods is not enough"
+    a = params[:amount_check]
+    if a.to_i == $m.quantity
+      if @amount > $m.quantity
+        redirect_to my_market_path , notice: "the quantity of this goods is not enough"
+      else
+        $m.quantity -= @amount
+        $m.save
+        $I.user_id = session[:id].to_i
+        $I.item_id = $m.item_id
+        $I.seller_id = $m.user_id
+        $I.price = $m.price
+        $I.quantity = @amount
+        $I.save
+        redirect_to my_market_path , notice: "transaction success"
+      end
     else
-      $m.quantity -= @amount
-      $m.save
-      $I.user_id = session[:id].to_i
-      $I.item_id = $m.item_id
-      $I.seller_id = $m.user_id
-      $I.price = $m.price
-      $I.quantity = @amount
-      $I.save
-      redirect_to my_market_path , notice: "transaction success"
+      redirect_to my_market_path , notice: "Information need to be updated before editted"
     end
+  end
+
+  def search
+    session[:regx] = "/" + params[:search] + "/"
+    session[:search] = true
+    redirect_to my_market_path
   end
 end

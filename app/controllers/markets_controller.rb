@@ -65,11 +65,17 @@ class MarketsController < ApplicationController
   end
 
   def updateInventory
+    p = params[:price_check]
+    q = params[:quantity_check]
     u = Market.where(id: params[:market_id]).first
-    u.quantity = params[:quantity]
-    u.price = params[:price]
-    u.save
-    redirect_to my_inventory_path, notice: "Your change already saved."
+    if q.to_i != u.quantity or p != u.price.to_s
+      redirect_to my_inventory_path, notice: "Information need to be updated before editted"
+    else
+      u.quantity = params[:quantity]
+      u.price = params[:price]
+      u.save
+      redirect_to my_inventory_path, notice: "Your change already saved."
+    end
   end
 
   def is_numberic?(str)
@@ -98,7 +104,7 @@ class MarketsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def market_params
-      params.require(:market).permit(:user_id, :item_id, :price, :quantity)
+      params.require(:market).permit(:user_id, :item_id, :price, :quantity, :lock_version)
     end
 
 end

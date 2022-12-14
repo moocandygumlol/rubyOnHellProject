@@ -1,4 +1,5 @@
 <%= form_with(model: inventory) do |form| %>
+  <%= form.hidden_field :lock_version%>
   <% if inventory.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(inventory.errors.count, "error") %> prohibited this inventory from being saved:</h2>
