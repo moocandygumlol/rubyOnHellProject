@@ -1,0 +1,39 @@
+<h1>My_Market</h1>
+<%= link_to "back to main" , main_path%>
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name Item</th>
+            <th>Name Seller</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <%if @role != 'guest'%>
+                <th>amount</th>
+                <th>Buy</th>
+            <% end %>
+        </tr>
+    </thead>
+    <% u = Market.all.first%>
+    <% x = User.where(id: u.user_id).first%>
+    <% y = Item.where(id: u.item_id).first%>
+    <tbody>
+        <tr>
+            <td><%=y.name%></td>
+            <td><%=x.name%></td>
+            <td><%=u.price%></td>
+            <td><%=u.quantity%></td>
+            <%if @role != 'guest'%>
+                <td>x</td>
+                <td>Buy</td>
+            <% end %>
+        </tr>
+        
+    </tbody>
+</table>
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
+
