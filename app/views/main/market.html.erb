@@ -4,6 +4,7 @@
     <thead>
         <tr>
             <th>Name Item</th>
+            <th>Category</th>
             <th>Name Seller</th>
             <th>Price</th>
             <th>Quantity</th>
@@ -13,21 +14,28 @@
             <% end %>
         </tr>
     </thead>
-    <% u = Market.all.first%>
-    <% x = User.where(id: u.user_id).first%>
-    <% y = Item.where(id: u.item_id).first%>
+    
+    
     <tbody>
+    <% $u = Market.all%>
+    <% for e in $u do%>
+        <% x = User.where(id: e.user_id).first%>
+        <% y = Item.where(id: e.item_id).first%>
         <tr>
             <td><%=y.name%></td>
+            <td><%=y.category%></td>
             <td><%=x.name%></td>
-            <td><%=u.price%></td>
-            <td><%=u.quantity%></td>
+            <td><%=e.price%></td>
+            <td><%=e.quantity%></td>
             <%if @role != 'guest'%>
-                <td>x</td>
-                <td>Buy</td>
-            <% end %>
+                <%= form_with url: buy_path, method: :post , data: {turbo: false} do |f| %>
+                    <%=f.hidden_field :f_id , value: e.id%>
+                    <td><%=f.number_field :amount , in: 1..1000000, step: 1%></td>
+                    <td><%=f.submit :Buy %></td>
+                <%end%>
+            <% end %>  
         </tr>
-        
+    <%end%>
     </tbody>
 </table>
 <script type="text/javascript" class="init">
