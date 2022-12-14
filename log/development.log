@@ -26793,3 +26793,24 @@ Processing by MainController#market as HTML
 Completed 200 OK in 25ms (Views: 21.3ms | ActiveRecord: 0.6ms | Allocations: 14839)
 
 
+Started GET "/main" for ::1 at 2022-12-14 22:11:51 +0700
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by MainController#home as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:16:in `role?'
+  Rendering layout layouts/application.html.erb
+  Rendering main/home.html.erb within layouts/application
+  Rendered main/home.html.erb within layouts/application (Duration: 0.8ms | Allocations: 981)
+  Rendered layout layouts/application.html.erb (Duration: 20.9ms | Allocations: 36412)
+Completed 200 OK in 34ms (Views: 22.4ms | ActiveRecord: 0.5ms | Allocations: 48456)
+
+
+Started GET "/top_seller" for ::1 at 2022-12-14 22:11:52 +0700
+Processing by MainController#topseller as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering main/topseller.html.erb within layouts/application
+  Rendered main/topseller.html.erb within layouts/application (Duration: 7.4ms | Allocations: 2431)
+  Rendered layout layouts/application.html.erb (Duration: 10.8ms | Allocations: 4762)
+Completed 200 OK in 14ms (Views: 11.6ms | ActiveRecord: 0.0ms | Allocations: 5431)
+
+
